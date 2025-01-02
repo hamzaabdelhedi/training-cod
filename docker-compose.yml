@@ -1,0 +1,37 @@
+
+version: '3.8'
+
+services:
+  #fastapi:
+  #  build:
+  #    context: .
+  #    dockerfile: Dockerfile
+  #  container_name: fastapi-container
+  #  ports:
+  #    - "8000:8000"
+  #  environment:
+  #    - MONGO_HOST=mongodb://mongo:27017
+  #    - MONGO_DATABASE=${MONGO_DATABASE:-training_cod}
+  #    - MONGO_USERNAME=${MONGO_USERNAME:-cod}
+  #    - MONGO_PWD=${MONGO_PWD:-cod_pwd}
+  #    - LOG_LEVEL=${LOG_LEVEL:-info}
+  #  depends_on:
+  #    - mongo
+  #  restart: always
+
+  mongo:
+    image: "mongo:7.0"
+    container_name: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME:-cod}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PWD:-cod_pwd}
+      - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE:-training_cod}
+    volumes:
+      - mongo-data:/data/db
+    restart: always
+    ports:
+      - 27017:27017
+
+volumes:
+  mongo-data:
+    driver: local
